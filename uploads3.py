@@ -28,3 +28,4 @@ k = Key(bucket)
 k.key = ""#nombre del arvhivo a subir
 k.set_contents_from_filename(testfile,
 cb=percent_cb, num_cb=10)	
+print("test")
