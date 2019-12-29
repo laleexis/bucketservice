@@ -29,7 +29,7 @@ def upload_to_aws(local_file, bucket, s3_file):
 
 
 def get_all_s3_keys(bucket):
-    """Get a list of all keys in an S3 bucket."""
+   # """Get a list of all keys in an S3 bucket."""
     keys = []
 
     kwargs = {'Bucket': bucket}
@@ -56,7 +56,7 @@ elif selection == 2:
                       aws_secret_access_key=SECRET_KEY)
     s3.list_objects_v2(Bucket=BUCKET)
     print(get_all_s3_keys(BUCKET))
-    KEY = str(input("ingrese key"))  # replace with your object key
+    KEY = str(input("enter key"))  # replace with your object key
 
     s3 = boto3.resource('s3',
                         aws_access_key_id=ACCESS_KEY,
