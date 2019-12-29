@@ -4,8 +4,8 @@ import botocore
 
 ACCESS_KEY = ''
 SECRET_KEY = ''
-BUCKET = "supportmeli"
-LOCAL_FILE = "uploadtest.txt"
+BUCKET = ""
+LOCAL_FILE = ""
 S3_FILENAME = LOCAL_FILE
 
 print(" Menu: \n1 Upload file\n2 Download dile")
@@ -51,7 +51,7 @@ if selection == 1:
     uploaded = upload_to_aws(LOCAL_FILE, BUCKET, S3_FILENAME)
 
 elif selection == 2:
-    print("descarga de archivos")
+    print("Download files")
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                       aws_secret_access_key=SECRET_KEY)
     s3.list_objects_v2(Bucket=BUCKET)
