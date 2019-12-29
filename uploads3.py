@@ -29,7 +29,6 @@ def upload_to_aws(local_file, bucket, s3_file):
 
 
 def get_all_s3_keys(bucket):
-   # """Get a list of all keys in an S3 bucket."""
     keys = []
 
     kwargs = {'Bucket': bucket}
@@ -71,4 +70,4 @@ elif selection == 2:
             raise
 
 else:
-    print("seleccione una opcion valida")
+    print("wrong option")
