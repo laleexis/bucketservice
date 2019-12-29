@@ -2,10 +2,10 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 import botocore
 
-ACCESS_KEY = 'AKIAVHP33H4XBGJBCYHB'
-SECRET_KEY = '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'
+ACCESS_KEY = ''
+SECRET_KEY = ''
 BUCKET = "supportmeli"
-LOCAL_FILE = "path local file"
+LOCAL_FILE = "uploadtest.txt"
 S3_FILENAME = LOCAL_FILE
 
 print(" Menu: \n1 Upload file\n2 Download dile")
@@ -28,19 +28,42 @@ def upload_to_aws(local_file, bucket, s3_file):
         return False
 
 
+def get_all_s3_keys(bucket):
+    """Get a list of all keys in an S3 bucket."""
+    keys = []
+
+    kwargs = {'Bucket': bucket}
+    while True:
+        resp = s3.list_objects_v2(**kwargs)
+        for obj in resp['Contents']:
+            keys.append(obj['Key'])
+
+        try:
+            kwargs['ContinuationToken'] = resp['NextContinuationToken']
+        except KeyError:
+            break
+
+    return keys
+
+
 if selection == 1:
     print("Uploading file")
     uploaded = upload_to_aws(LOCAL_FILE, BUCKET, S3_FILENAME)
 
 elif selection == 2:
     print("descarga de archivos")
-
+    s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+                      aws_secret_access_key=SECRET_KEY)
+    s3.list_objects_v2(Bucket=BUCKET)
+    print(get_all_s3_keys(BUCKET))
     KEY = str(input("ingrese key"))  # replace with your object key
 
-    s3 = boto3.resource('s3')
+    s3 = boto3.resource('s3',
+                        aws_access_key_id=ACCESS_KEY,
+                        aws_secret_access_key=SECRET_KEY)
 
     try:
-        s3.Bucket(BUCKET).download_file(KEY, 'my_local_image.jpg')
+        s3.Bucket(BUCKET).download_file(KEY, KEY)
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             print("The object does not exist.")
