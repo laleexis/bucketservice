@@ -1,31 +1,51 @@
-#instalar libreria boto
-import boto
-import boto.s3
-import sys
-from boto.s3.key import Key
+import boto3
+from botocore.exceptions import NoCredentialsError
+import botocore
 
-AWS_ACCESS_KEY_ID = ""
-AWS_SECRET_ACCESS_KEY = ""
+ACCESS_KEY = 'AKIAVHP33H4XBGJBCYHB'
+SECRET_KEY = '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'
+BUCKET = "supportmeli"
+LOCAL_FILE = "path local file"
+S3_FILENAME = LOCAL_FILE
 
-bucket_name = AWS_ACCESS_KEY_ID.lower() + "" #nombre del bucket con tu id + el nombre que quieras
-conn = boto.connect_s3(AWS_ACCESS_KEY_ID,
-AWS_SECRET_ACCESS_KEY)
-
-
-bucket = conn.create_bucket(bucket_name,
-location=boto.s3.connection.Location.DEFAULT) #crea el bucket con el bombre declarado en bucket_name
-
-testfile = "" #ruta del archivo a subir
-print ("Uploading %s to Amazon S3 bucket %s" % 
-(testfile, bucket_name))
-
-def percent_cb(complete, total):
-	sys.stdout.write(".")
-	sys.stdout.flush()
+print(" Menu: \n1 Upload file\n2 Download dile")
+selection = int(input("Select option"))
 
 
-k = Key(bucket)
-k.key = ""#nombre del arvhivo a subir
-k.set_contents_from_filename(testfile,
-cb=percent_cb, num_cb=10)	
-print("test")
+def upload_to_aws(local_file, bucket, s3_file):
+    s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+                      aws_secret_access_key=SECRET_KEY)
+
+    try:
+        s3.upload_file(local_file, bucket, s3_file)
+        print("Upload Successful")
+        return True
+    except FileNotFoundError:
+        print("The file was not found")
+        return False
+    except NoCredentialsError:
+        print("Credentials not available")
+        return False
+
+
+if selection == 1:
+    print("Uploading file")
+    uploaded = upload_to_aws(LOCAL_FILE, BUCKET, S3_FILENAME)
+
+elif selection == 2:
+    print("descarga de archivos")
+
+    KEY = str(input("ingrese key"))  # replace with your object key
+
+    s3 = boto3.resource('s3')
+
+    try:
+        s3.Bucket(BUCKET).download_file(KEY, 'my_local_image.jpg')
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            print("The object does not exist.")
+        else:
+            raise
+
+else:
+    print("seleccione una opcion valida")
