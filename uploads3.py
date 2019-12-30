@@ -8,7 +8,7 @@ BUCKET = ""
 LOCAL_FILE = ""
 S3_FILENAME = LOCAL_FILE
 
-print(" Menu: \n1 Upload file\n2 Download dile")
+print(" Menu: \n1 Upload file\n2 Download file")
 selection = int(input("Select option"))
 
 
