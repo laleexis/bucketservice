@@ -3,9 +3,9 @@ from botocore.exceptions import NoCredentialsError, ClientError
 
 import botocore
 
-ACCESS_KEY = 'AKIAVHP33H4XNVOG3YR2'
-SECRET_KEY = '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'
-BUCKET = "supportmeli"
+ACCESS_KEY = ''
+SECRET_KEY = ''
+BUCKET = ""
 LOCAL_FILE = "uploadtest12.txt"
 S3_FILENAME = LOCAL_FILE
 
@@ -20,8 +20,6 @@ def upload_to_aws(local_file, bucket, s3_file):
         s3.upload_file(local_file, bucket, s3_file)
         print("Upload Successful")
         return True
-    except ClientError as c:
-        print(c)
     except FileNotFoundError:
         print("The file was not found")
         return False
