@@ -53,4 +53,19 @@ Help: `[-h]`
 
 - To show menu: no args
 
-(If the bucket is declared in the .json file omite the bucket argument)
+###Example:
+
+
+`updowns3.py -d test.txt myawsbucket`
+
+(If the bucket is declared in the .json file omit the bucket argument)
+
+###Example
+
+`updowns3.py -u test.txt'
+
+In the .json file:
+
+`"BUCKET":"myawsbucket"`
+
+
