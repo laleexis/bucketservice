@@ -47,10 +47,10 @@ The file will be uploaded in the bucket
 
 Help: `[-h]`
 
-To download: `[-d] [file] [bucket]`
+- To download: `[-d] [file] [bucket]`
 
-To upload:`[-u] [file] [bucket]`
+- To upload:`[-u] [file] [bucket]`
 
-To show menu: no args
+- To show menu: no args
 
-If the bucket is declared in the .json file omite the bucket argument
+(If the bucket is declared in the .json file omite the bucket argument)
