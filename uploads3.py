@@ -3,19 +3,21 @@ import json
 from botocore.exceptions import NoCredentialsError, ClientError
 import botocore
 from os import listdir
+import pyfiglet
 
 #crear un json con los datos
 with open("config.json") as json_data_file:
     data = json.load(json_data_file)
-print(data["ACCESS_KEY"])
 
 ACCESS_KEY = data["ACCESS_KEY"]
 SECRET_KEY = data["SECRET_KEY"]
 BUCKET = data["BUCKET"]
 LOCAL_PATH = data["LOCAL_PATH"]
 
+ascii_banner = pyfiglet.figlet_format("DOWN/UP S3")
+print(ascii_banner)
 print(" Menu: \n1 Upload file\n2 Download file")
-selection = int(input("Select option"))
+selection = int(input("Select option: "))
 
 def ls(ruta=""):
     return listdir(ruta)
@@ -50,7 +52,7 @@ def get_all_s3_keys(bucket):
             break
 
     return keys
-def download_from_aws(bucket,key,key):
+def download_from_aws(bucket,key,s3key):
     try:
         s3.Bucket(bucket).download_file(key,key)
     except botocore.exceptions.ClientError as e:
@@ -62,21 +64,22 @@ def download_from_aws(bucket,key,key):
 
 
 if selection == 1:
-
+    print("Listing files..")
     print(ls(LOCAL_PATH))
-    LOCAL_FILE = input(str("Select file to upload"))
-    S3_FILENAME= LOCAL_FILE
-
-    print("Uploading file")
+    s3name= input(str("Select file to upload: "))
+    S3_FILENAME= s3name
+    LOCAL_FILE = str(LOCAL_PATH)+ s3name
+    S3_FILENAME= s3name
+    print(LOCAL_FILE)
+    print("Uploading file...")
     uploaded = upload_to_aws(LOCAL_FILE, BUCKET, S3_FILENAME)
 
 elif selection == 2:
     print("listing files...")
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                       aws_secret_access_key=SECRET_KEY)
-    print(s3.list_objects_v2(Bucket=BUCKET))
     print(get_all_s3_keys(BUCKET))
-    KEY = str(input("enter key"))
+    KEY = str(input("enter key: "))
 
     s3 = boto3.resource('s3',
                         aws_access_key_id=ACCESS_KEY,
