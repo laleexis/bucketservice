@@ -19,7 +19,33 @@ Example:
 "LOCAL_PATH":"LOCAL PATH"
 }``
  
-###Download:
+### Download:
+
+### Arguments mode 
+
+Help: `[-h]`
+
+- To download: `[-d] [file] [bucket]`
+
+- To upload:`[-u] [file] [bucket]`
+
+- To show menu: no args
+
+### Example:
+
+
+`updowns3.py -d test.txt myawsbucket`
+
+(If the bucket is declared in the .json file omit the bucket argument)
+
+### Example
+
+`updowns3.py -u test.txt'
+In the .json file:
+`"BUCKET":"myawsbucket"`
+
+### Menu mode
+
 
 - Run the script and enter option 2 `download file`
 
@@ -33,7 +59,7 @@ the files hosted in the bucket will be listed
 
 the file will be downloaded in the same location as the script
 
-###Upload:
+### Upload:
 
 - Run the sctipt and enter option 2 `upload file`
 
@@ -43,29 +69,6 @@ The files hosted in local path will be listed
 
 The file will be uploaded in the bucket 
 
-###Arguments mode 
 
-Help: `[-h]`
-
-- To download: `[-d] [file] [bucket]`
-
-- To upload:`[-u] [file] [bucket]`
-
-- To show menu: no args
-
-###Example:
-
-
-`updowns3.py -d test.txt myawsbucket`
-
-(If the bucket is declared in the .json file omit the bucket argument)
-
-###Example
-
-`updowns3.py -u test.txt'
-
-In the .json file:
-
-`"BUCKET":"myawsbucket"`
 
 
