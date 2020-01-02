@@ -1,9 +1,6 @@
 {
-"credentials":{
-	"USER_KEY":"",
-	"SECRET":"",},
-"BUCKET":{
-	"BUCKET_NAME":"",
-}
-
+"ACCESS_KEY":"test",
+"SECRET_KEY":"test2",
+"BUCKET":"test3",
+"LOCAL_PATH":"."
 }
