@@ -4,7 +4,7 @@ from botocore.exceptions import NoCredentialsError, ClientError
 import botocore
 from os import listdir
 
-
+#crear un json con los datos
 with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 print(data["ACCESS_KEY"])
