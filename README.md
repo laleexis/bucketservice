@@ -7,7 +7,7 @@ Downlad/upload files in bucket s3
 
 #Usage:
 
-Create a `.json` file with the `ACCESS_KEY`, `SECRET_KEY` , `BUCKET` and `LOCAL_PATH`
+Create a `.json` file with the `ACCESS_KEY`, `SECRET_KEY` , `BUCKET`(optional) and `LOCAL_PATH`(optional)
 
 Example:
 ``{
@@ -20,6 +20,10 @@ Example:
 ###Download:
 
 - Run the script and enter option 2 `download file`
+
+The buckets avilable Will be listed
+
+- Enter the bucket
 
 the files hosted in the bucket will be listed
 
@@ -37,4 +41,12 @@ The files hosted in local path will be listed
 
 The file will be uploaded in the bucket 
 
+##arguments mode 
 
+To download:  [-d] [file] [bucket]
+
+To upload: [-u] [file] [bucket]
+
+To show menu: no args
+
+If the bucket is declared in the .json file omite the bucket arg.
