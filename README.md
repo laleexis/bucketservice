@@ -5,7 +5,7 @@ Downlad/upload files in bucket s3
 
 `boto3`
 
-#Usage:
+###Usage:
 
 
 
@@ -19,7 +19,6 @@ Example:
 "LOCAL_PATH":"LOCAL PATH"
 }``
  
-### Download:
 
 ### Arguments mode 
 
@@ -46,6 +45,8 @@ In the .json file:
 
 ### Menu mode
 
+
+### Download
 
 - Run the script and enter option 2 `download file`
 
