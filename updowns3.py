@@ -6,7 +6,7 @@ from os import listdir
 import pyfiglet
 import sys
 
-ascii_banner = pyfiglet.figlet_format("DOWN/UP S3")
+ascii_banner = pyfiglet.figlet_format("DOWN&UPS3")
 print(ascii_banner)
 with open("config.json") as json_data_file:
         data = json.load(json_data_file)
@@ -16,8 +16,13 @@ LOCAL_PATH = data["LOCAL_PATH"]
 
 
 #funciones
-def ls(ruta=""):
-    return listdir(ruta)
+def ls(route=""):
+    files = {}
+    cont = 1
+    for f in listdir(route):
+        files[cont] = f
+        cont +=1
+    return files
 
 def upload_to_aws(local_file, bucket, s3_file):
     try:
@@ -37,26 +42,26 @@ def get_all_s3_buckets():
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                           aws_secret_access_key=SECRET_KEY)
     response = s3.list_buckets()
-    buckets = [bucket['Name'] for bucket in response['Buckets']]
+    bucketdict = {}
+    cont = 1
+    for bucket in response['Buckets']:
+        bucketdict[cont] = bucket['Name']
+        cont+=1
+   
     print("Listing buckets...")
-    return buckets
+    return bucketdict
 def get_all_s3_keys(bucket):
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                           aws_secret_access_key=SECRET_KEY)
     keys = []
-
-    kwargs = {'Bucket': bucket}
-    while True:
-        resp = s3.list_objects_v2(**kwargs)
-        for obj in resp['Contents']:
-            keys.append(obj['Key'])
-
-        try:
-            kwargs['ContinuationToken'] = resp['NextContinuationToken']
-        except KeyError:
-            break
-    print("Listing Files...")
-    return keys
+    keysdict = {}
+    cont = 1
+    for key in s3.list_objects(Bucket=bucket)['Contents']:
+        keys.append("["+str(cont)+"] "+key['Key'])
+        keysdict[cont]= key['Key']
+        cont=cont+1
+    #print(keysdict)
+    return keysdict
 def download_from_aws(bucket,key,s3key):
     s3 = boto3.resource('s3',aws_access_key_id=ACCESS_KEY,aws_secret_access_key=SECRET_KEY)
     try:
@@ -78,25 +83,29 @@ if len(sys.argv) ==1:
 
     if selection == 1:
         print("Listing files..")
-        print(ls(LOCAL_PATH))
-        s3name= input(str("Select file to upload: "))
-        S3_FILENAME= s3name
-        LOCAL_FILE = str(LOCAL_PATH)+ s3name
-        S3_FILENAME= s3name
+        listf = ls(LOCAL_PATH)
+        print(listf)
+        s3name= int(input("Select file to upload: "))
+        S3_FILENAME= listf[s3name]
+        LOCAL_FILE = str(LOCAL_PATH)+ listf[s3name]
+        S3_FILENAME= listf[s3name]
         print(LOCAL_FILE)
-        print(get_all_s3_buckets())
-        BUCKETSEL= str(input("Select Bucket: "))
+        bucketdown = get_all_s3_buckets()
+        print(bucketdown)
+        BUCKETSEL= int(input("Select Bucket: "))
         print("Uploading file...")
-        uploaded = upload_to_aws(LOCAL_FILE, BUCKETSEL, S3_FILENAME)
+        uploaded = upload_to_aws(LOCAL_FILE, bucketdown[BUCKETSEL], S3_FILENAME)
 
     elif selection == 2:
         s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                           aws_secret_access_key=SECRET_KEY)
-        print(get_all_s3_buckets())
-        BUCKETSEL= str(input("Select Bucket: "))
-        print(get_all_s3_keys(BUCKETSEL))
-        KEY = str(input("enter key: "))
-        download_from_aws(BUCKET,KEY,KEY)
+        bucketdown = get_all_s3_buckets()
+        print(bucketdown)
+        BUCKETSEL= int(input("Select Bucket: "))
+        keysdown = get_all_s3_keys(bucketdown[BUCKETSEL])
+        print(keysdown)
+        KEY = int(input("enter key: "))
+        download_from_aws(bucketdown[BUCKETSEL],keysdown[KEY],keysdown[KEY])
 
     else:
         print("wrong option")
@@ -114,7 +123,7 @@ else:#Modo por parametros
         else:
             download_from_aws(sys.argv[3],sys.argv[2],sys.argv[2])
     elif sys.argv[1]=="-h":
-        print(" To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: no args" )
+        print(" To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: no args")
     else:
         print("select [-d] to donwload, [-u] to upload or none for show menu...")
 
