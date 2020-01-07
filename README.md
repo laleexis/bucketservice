@@ -28,7 +28,7 @@ Help: `[-h]`
 
 - To upload:`[-u] [file] [bucket]`
 
-- To show menu: no args
+- To show menu: [-m]
 
 ### Example:
 
@@ -71,5 +71,18 @@ The files hosted in local path will be listed
 The file will be uploaded in the bucket 
 
 
+### API
+
+To List files in the bucket 
+
+ `GET url/storage'
+
+To download file 
+
+ `GET url/download/file`
+
+To upload file
+
+`POST url/upload/file`
 
 
