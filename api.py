@@ -1,5 +1,5 @@
 from flask import Flask, request
-from updowns3 import upload_to_aws, get_all_s3_keys, get_all_s3_buckets, download_from_aws
+from updowns3 import upload_to_aws, get_all_s3_keys, get_all_s3_buckets, download_from_aws, delete_from_aws
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "."
@@ -27,6 +27,11 @@ def download(filename):
         output = download_from_aws(BUCKET,filename,filename)
 
         return "Download complete"
+@app.route("/delete/<filename>", methods=['DELETE'])
+def delete(filename):
+	if request.method == 'DELETE':
+		output = delete_from_aws(BUCKET,filename)
+		return "Deleted"
         
 if __name__ == '__main__':
     app.run(debug=True)

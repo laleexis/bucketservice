@@ -61,6 +61,11 @@ def get_all_s3_keys(bucket):
         cont=cont+1
     #print(keysdict)
     return keysdict
+def delete_from_aws(bucket,key):
+    s3 = boto3.resource('s3',aws_access_key_id=ACCESS_KEY,aws_secret_access_key=SECRET_KEY)
+    s3.Object(bucket,key).delete()
+    return ("deleted")
+
 def download_from_aws(bucket,key,s3key):
     s3 = boto3.resource('s3',aws_access_key_id=ACCESS_KEY,aws_secret_access_key=SECRET_KEY)
     try:
