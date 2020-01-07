@@ -1,2 +1,5 @@
 config.json
 *.json
+.idea
+*.txt
+__pycache__

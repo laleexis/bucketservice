@@ -6,8 +6,7 @@ from os import listdir
 import pyfiglet
 import sys
 
-ascii_banner = pyfiglet.figlet_format("DOWN&UPS3")
-print(ascii_banner)
+
 with open("config.json") as json_data_file:
         data = json.load(json_data_file)
 ACCESS_KEY = data["ACCESS_KEY"]
@@ -24,11 +23,11 @@ def ls(route=""):
         cont +=1
     return files
 
-def upload_to_aws(local_file, bucket, s3_file):
+def upload_to_aws(local_file, bucket,):
     try:
         s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                           aws_secret_access_key=SECRET_KEY)
-        s3.upload_file(local_file, bucket, s3_file)
+        s3.upload_file(local_file, bucket, lo)
         print("Upload Successful")
         return True
     except FileNotFoundError:
@@ -73,42 +72,9 @@ def download_from_aws(bucket,key,s3key):
         else:
             raise
 if len(sys.argv) ==1:
+    print("modo API")
 
-#Modo menu
-#crear un json con los datos   
-    BUCKET = data["BUCKET"]
-    
-    print(" Menu: \n1 Upload file\n2 Download file")
-    selection = int(input("Select option: "))
 
-    if selection == 1:
-        print("Listing files..")
-        listf = ls(LOCAL_PATH)
-        print(listf)
-        s3name= int(input("Select file to upload: "))
-        S3_FILENAME= listf[s3name]
-        LOCAL_FILE = str(LOCAL_PATH)+ listf[s3name]
-        S3_FILENAME= listf[s3name]
-        print(LOCAL_FILE)
-        bucketdown = get_all_s3_buckets()
-        print(bucketdown)
-        BUCKETSEL= int(input("Select Bucket: "))
-        print("Uploading file...")
-        uploaded = upload_to_aws(LOCAL_FILE, bucketdown[BUCKETSEL], S3_FILENAME)
-
-    elif selection == 2:
-        s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-                          aws_secret_access_key=SECRET_KEY)
-        bucketdown = get_all_s3_buckets()
-        print(bucketdown)
-        BUCKETSEL= int(input("Select Bucket: "))
-        keysdown = get_all_s3_keys(bucketdown[BUCKETSEL])
-        print(keysdown)
-        KEY = int(input("enter key: "))
-        download_from_aws(bucketdown[BUCKETSEL],keysdown[KEY],keysdown[KEY])
-
-    else:
-        print("wrong option")
 else:#Modo por parametros
     if sys.argv[1] == "-u":
         S3_FILENAME=sys.argv[2]
@@ -124,6 +90,42 @@ else:#Modo por parametros
             download_from_aws(sys.argv[3],sys.argv[2],sys.argv[2])
     elif sys.argv[1]=="-h":
         print(" To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: no args")
-    else:
-        print("select [-d] to donwload, [-u] to upload or none for show menu...")
+    elif sys.argv[1]=="-m":
+        ascii_banner = pyfiglet.figlet_format("DOWN&UPS3")
+        print(ascii_banner)
+        #Modo menu
+#crear un json con los datos   
+        BUCKET = data["BUCKET"]
+    
+        print(" Menu: \n1 Upload file\n2 Download file")
+        selection = int(input("Select option: "))
+
+        if selection == 1:
+            print("Listing files..")
+            listf = ls(LOCAL_PATH)
+            print(listf)
+            s3name= int(input("Select file to upload: "))
+            S3_FILENAME= listf[s3name]
+            LOCAL_FILE = str(LOCAL_PATH)+ listf[s3name]
+            S3_FILENAME= listf[s3name]
+            print(LOCAL_FILE)
+            bucketdown = get_all_s3_buckets()
+            print(bucketdown)
+            BUCKETSEL= int(input("Select Bucket: "))
+            print("Uploading file...")
+            uploaded = upload_to_aws(LOCAL_FILE, bucketdown[BUCKETSEL], S3_FILENAME)
+
+        elif selection == 2:
+            s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+                            aws_secret_access_key=SECRET_KEY)
+            bucketdown = get_all_s3_buckets()
+            print(bucketdown)
+            BUCKETSEL= int(input("Select Bucket: "))
+            keysdown = get_all_s3_keys(bucketdown[BUCKETSEL])
+            print(keysdown)
+            KEY = int(input("enter key: "))
+            download_from_aws(bucketdown[BUCKETSEL],keysdown[KEY],keysdown[KEY])
+
+        else:
+            print("wrong option")
 

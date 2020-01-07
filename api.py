@@ -1,5 +1,4 @@
-import os
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, request
 from updowns3 import upload_to_aws, get_all_s3_keys, get_all_s3_buckets, download_from_aws
 
 app = Flask(__name__)
@@ -12,7 +11,7 @@ def entry_point():
 
 @app.route("/storage")
 def storage():
-    contents = get_all_s3_keys("supportmeli")
+    contents = get_all_s3_keys(BUCKET)
     return contents
 
 @app.route("/upload/<filename>", methods=['POST'])
