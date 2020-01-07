@@ -4,6 +4,7 @@ Downlad/upload files in bucket s3
  ### requirements:
 
 `boto3`
+`Flask`
 
  ### Usage:
 
@@ -12,6 +13,7 @@ Downlad/upload files in bucket s3
 Create a `.json` file with the `ACCESS_KEY`, `SECRET_KEY` , `BUCKET`(optional) and `LOCAL_PATH`(optional)
 
 Example:
+
 ``{
 "ACCESS_KEY":"IAM USER",
 "SECRET_KEY":"IAM SECRET",
@@ -28,7 +30,7 @@ Help: `[-h]`
 
 - To upload:`[-u] [file] [bucket]`
 
-- To show menu: [-m]
+- To show menu: `[-m]`
 
 ### Example:
 
@@ -40,7 +42,10 @@ Help: `[-h]`
 ### Example
 
 `updowns3.py -u test.txt'
+
+
 In the .json file:
+
 `"BUCKET":"myawsbucket"`
 
 ### Menu mode
@@ -73,16 +78,16 @@ The file will be uploaded in the bucket
 
 ### API
 
-To List files in the bucket 
+- To List files in the bucket 
 
  `GET url/storage`
 
-To download file 
+- To download file 
 
  `GET url/download/file`
 
-To upload file
+- To upload file
 
-`POST url/upload/file`
+ `POST url/upload/file`
 
 
