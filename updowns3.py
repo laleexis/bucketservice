@@ -23,11 +23,11 @@ def ls(route=""):
         cont +=1
     return files
 
-def upload_to_aws(local_file, bucket,):
+def upload_to_aws(local_file, bucket,s3filename):
     try:
         s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                           aws_secret_access_key=SECRET_KEY)
-        s3.upload_file(local_file, bucket, lo)
+        s3.upload_file(local_file, bucket, s3filename)
         print("Upload Successful")
         return True
     except FileNotFoundError:

@@ -17,14 +17,14 @@ def storage():
 @app.route("/upload/<filename>", methods=['POST'])
 def upload(filename):
     if request.method == "POST":
-        output= upload_to_aws(filename, BUCKET)
+        output= upload_to_aws(filename, BUCKET,filename)
 
         return "Upload complete"
 
 @app.route("/download/<filename>", methods=['GET'])
 def download(filename):
     if request.method == 'GET':
-        output = download_from_aws(BUCKET,filename)
+        output = download_from_aws(BUCKET,filename,filename)
 
         return "Download complete"
         
