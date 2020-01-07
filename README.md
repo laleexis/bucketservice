@@ -1,11 +1,11 @@
 # Bucketservice
 Downlad/upload files in bucket s3
 
-###requirements:
+ ### requirements:
 
 `boto3`
 
-###Usage:
+ ### Usage:
 
 
 
@@ -75,7 +75,7 @@ The file will be uploaded in the bucket
 
 To List files in the bucket 
 
- `GET url/storage'
+ `GET url/storage`
 
 To download file 
 
