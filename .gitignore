@@ -3,3 +3,4 @@ config.json
 .idea
 *.txt
 __pycache__
+uploads

@@ -1,37 +1,42 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 from updowns3 import upload_to_aws, get_all_s3_keys, get_all_s3_buckets, download_from_aws, delete_from_aws
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "."
 BUCKET = "supportmeli"
+path = "C:/Users/alucero/Documents"
+
 
 @app.route('/')
 def entry_point():
-    return 'Test API'
+	return 'Test API'
 
-@app.route("/storage")
+@app.route("/files", methods=['POST']) #json in body
 def storage():
-    contents = get_all_s3_keys(BUCKET)
-    return contents
+	req_data = request.get_json()
+	if request.method == "POST":
+		contents = get_all_s3_keys(req_data['BUCKET'],req_data['ACCESS_KEY'],req_data['SECRET_KEY'])
+		return contents
 
-@app.route("/upload/<filename>", methods=['POST'])
-def upload(filename):
-    if request.method == "POST":
-        output= upload_to_aws(filename, BUCKET,filename)
+@app.route("/files/upload", methods=['POST'])
+def upload():
+	req_data = request.get_json()
+	if request.method == "POST":
+		output= upload_to_aws(req_data['UPLOAD'], req_data['BUCKET'],req_data['NAME'],req_data['ACCESS_KEY'],req_data['SECRET_KEY'])
+		return "Upload complete"
 
-        return "Upload complete"
-
-@app.route("/download/<filename>", methods=['GET'])
+@app.route("/files/<filename>", methods=['GET'])
 def download(filename):
-    if request.method == 'GET':
-        output = download_from_aws(BUCKET,filename,filename)
+	if request.method == 'GET':
+		output = download_from_aws(filename,BUCKET,path)
+		 
+		return send_file(output, as_attachment=True)
 
-        return "Download complete"
-@app.route("/delete/<filename>", methods=['DELETE'])
+@app.route("/files/<filename>", methods=['DELETE'])
 def delete(filename):
 	if request.method == 'DELETE':
 		output = delete_from_aws(BUCKET,filename)
 		return "Deleted"
-        
+		
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)
