@@ -8,7 +8,7 @@ Downlad/upload files in bucket s3
 
 `pyfiglet` (optional for tool mode)
 
-### Usage:
+# Usage:
 #TOOL MODE:
 
 Create a `.json` file with the `ACCESS_KEY`, `SECRET_KEY` , `BUCKET`(optional) and `LOCAL_PATH`(optional)
@@ -23,7 +23,7 @@ Example:
 }``
  
 
-## Arguments 
+### Arguments 
 
 Help: `[-h]`
 
@@ -51,7 +51,7 @@ In the .json file:
 
 
 
-## Menu:
+### Menu:
 ### Download
 
 - Run the script and enter option 2 `download file`
@@ -81,6 +81,8 @@ The file will be uploaded in the bucket
 - Run the script and enter option 2 `Delete file`
 
 # API
+
+- Run api.py in the server.
 
 - To List files in the bucket 
 
