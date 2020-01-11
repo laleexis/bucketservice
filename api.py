@@ -31,7 +31,7 @@ def upload():
 
 @app.route("/files/<filename>", methods=['POST'])
 def download(filename):
-    if request.method == 'GET':
+    if request.method == 'POST':
         request_data = request.get_json()
         output = download_from_aws(request_data["S3_KEY"], request_data["BUCKET"], request_data["PATH_SV"],request_data["ACCESS_KEY"],request_data["SECRET_KEY"])
         return send_file(output, as_attachment=True)
