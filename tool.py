@@ -12,7 +12,6 @@ ACCESS_KEY = data["ACCESS_KEY"]
 SECRET_KEY = data["SECRET_KEY"]
 LOCAL_PATH = data["LOCAL_PATH"]
 BUCKET = data["BUCKET"]
-PATH_SV = data["PATH_SV"]
 s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                   aws_secret_access_key=SECRET_KEY)
 s3r = boto3.resource('s3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)

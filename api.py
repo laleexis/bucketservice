@@ -35,8 +35,8 @@ def upload():
 def download(filename):
     if request.method == 'POST':
         req_data = request.get_json()
-        output = download_from_aws(filename, req_data["BUCKET"],req_data["ACCESS_KEY"],req_data["SECRET_KEY"])
-        return send_file(output, as_attachment=True)
+        download_from_aws(filename, req_data["BUCKET"],req_data["ACCESS_KEY"],req_data["SECRET_KEY"])
+
 
 @app.route("/files/<filename>", methods=['DELETE'])
 def delete(filename):
