@@ -17,6 +17,12 @@ s3r = boto3.resource('s3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=S
 me = " To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: [-m]"
 # api endpoint
 URL = "http://3.15.23.57/"
+jsonApi = ""
+datasv = {'ACCESS_KEY': ACCESS_KEY,
+          'SECRET_KEY': SECRET_KEY,
+          'PATH_SV': data["PATH_SV"],
+          'S3_KEY': sys.argv[2],
+          'BUCKET': data["BUCKET"]}
 
 
 def menu(s3, s3r, me):
@@ -24,9 +30,11 @@ def menu(s3, s3r, me):
         S3_FILENAME = sys.argv[2]
         print("Uploading Files")
         if len(sys.argv) == 3:
-            upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2])
+            upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2],ACCESS_KEY,SECRET_KEY)
         else:
-            uploaded = upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2])
+            upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2],ACCESS_KEY,SECRET_KEY)
+            r = requests.get(url=URL+"files/"+str(sys.argv[2]), data=datasv)
+            print(r.text)
 
     elif sys.argv[1] == "-d":
         if len(sys.argv) == 3:
