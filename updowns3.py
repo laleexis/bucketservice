@@ -65,4 +65,4 @@ def download_from_aws(key, bucket, path, ACCESS_KEY, SECRET_KEY):
     s3 = client(ACCESS_KEY, SECRET_KEY)
     output = f"{path}{key}"
     s3.download_file(bucket, output, key)
-
+    return output

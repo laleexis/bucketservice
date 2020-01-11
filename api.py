@@ -33,8 +33,8 @@ def upload():
 def download(filename):
     if request.method == 'GET':
         request_data = request.get_json()
-        download_from_aws(request_data["S3_KEY"], request_data["BUCKET"], request_data["PATH_SV"],request_data["ACCESS_KEY"],request_data["SECRET_KEY"])
-
+        output = download_from_aws(request_data["S3_KEY"], request_data["BUCKET"], request_data["PATH_SV"],request_data["ACCESS_KEY"],request_data["SECRET_KEY"])
+        return output
 
 
 @app.route("/files/<filename>", methods=['DELETE'])
