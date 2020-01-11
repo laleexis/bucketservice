@@ -36,7 +36,7 @@ def menu(s3, s3r, me):
             upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2], ACCESS_KEY, SECRET_KEY)
         else:
             upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2], ACCESS_KEY, SECRET_KEY)
-            r = requests.post(URL + str(sys.argv[2]), data=json.dumps(data), headers=headers)
+            r = requests.post(URL + "/files", data=json.dumps(data), headers=headers)
             print(r)
     elif sys.argv[1] == "-d":
         if len(sys.argv) == 3:
