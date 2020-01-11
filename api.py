@@ -16,7 +16,9 @@ def entry_point():
 def storage():
     req_data = request.get_json()
     if request.method == "POST":
+
         contents = get_all_s3_keys(req_data['BUCKET'], req_data['ACCESS_KEY'], req_data['SECRET_KEY'])
+        print(req_data['BUCKET'])
         return contents
 
 
@@ -32,9 +34,9 @@ def upload():
 @app.route("/files/<filename>", methods=['POST'])
 def download(filename):
     if request.method == 'POST':
-        request_data = request.get_json()
-        download_from_aws(filename, request_data["BUCKET"],request_data["ACCESS_KEY"],request_data["SECRET_KEY"])
-        return "Download complete"
+        req_data = request.get_json()
+        output = download_from_aws(filename, req_data["BUCKET"],req_data["ACCESS_KEY"],req_data["SECRET_KEY"])
+        return send_file(output, as_attachment=True)
 
 @app.route("/files/<filename>", methods=['DELETE'])
 def delete(filename):
@@ -44,4 +46,4 @@ def delete(filename):
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', debug=True, port=80)
+    app.run('0.0.0.0', debug=True)

@@ -11,30 +11,39 @@ with open("config.json") as json_data_file:
 ACCESS_KEY = data["ACCESS_KEY"]
 SECRET_KEY = data["SECRET_KEY"]
 LOCAL_PATH = data["LOCAL_PATH"]
+BUCKET = data["BUCKET"]
+PATH_SV = data["PATH_SV"]
 s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                   aws_secret_access_key=SECRET_KEY)
 s3r = boto3.resource('s3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
 me = " To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: [-m]"
 # api endpoint
 URL = "http://3.15.23.57/"
-jsonApi = ""
-
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+data = {
+    "ACCESS_KEY": ACCESS_KEY,
+    "SECRET_KEY": SECRET_KEY,
+    "BUCKET": BUCKET,
+    "LOCAL_PATH": LOCAL_PATH,
+    "PATH_SV": PATH_SV
+}
 
 
 def menu(s3, s3r, me):
     if sys.argv[1] == "-u":
         print("Uploading Files")
         if len(sys.argv) == 3:
-            upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2],ACCESS_KEY,SECRET_KEY)
+            upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2], ACCESS_KEY, SECRET_KEY)
         else:
-            upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2],ACCESS_KEY,SECRET_KEY)
-
+            upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2], ACCESS_KEY, SECRET_KEY)
+            r = requests.post(URL + str(sys.argv[2]), data=json.dumps(data), headers=headers)
+            print(r)
     elif sys.argv[1] == "-d":
         if len(sys.argv) == 3:
-            download_from_aws(sys.argv[2], data["BUCKET"],ACCESS_KEY,SECRET_KEY)
+            download_from_aws(sys.argv[2], data["BUCKET"], ACCESS_KEY, SECRET_KEY)
 
         else:
-            download_from_aws( sys.argv[2], sys.argv[3],ACCESS_KEY,SECRET_KEY)
+            download_from_aws(sys.argv[2], sys.argv[3], ACCESS_KEY, SECRET_KEY)
 
     elif sys.argv[1] == "-h":
         print(me)
