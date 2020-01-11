@@ -33,7 +33,7 @@ def menu(s3, s3r, me):
             upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2],ACCESS_KEY,SECRET_KEY)
         else:
             upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2],ACCESS_KEY,SECRET_KEY)
-            r = requests.get(url=URL+"files/"+str(sys.argv[2]), data=datasv)
+            r = requests.get(url=URL+"files/"+str(sys.argv[2]), params=datasv)
             print(r.text)
 
     elif sys.argv[1] == "-d":
