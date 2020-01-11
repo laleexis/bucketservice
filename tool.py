@@ -21,7 +21,7 @@ jsonApi = ""
 datasv = {'ACCESS_KEY': ACCESS_KEY,
           'SECRET_KEY': SECRET_KEY,
           'PATH_SV': data["PATH_SV"],
-          'S3_KEY': sys.argv[2],
+          'S3_KEY': "testfinalapi.txt",
           'BUCKET': data["BUCKET"]}
 
 
