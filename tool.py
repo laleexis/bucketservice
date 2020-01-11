@@ -18,30 +18,23 @@ me = " To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To
 # api endpoint
 URL = "http://3.15.23.57/"
 jsonApi = ""
-datasv = {'ACCESS_KEY': ACCESS_KEY,
-          'SECRET_KEY': SECRET_KEY,
-          'PATH_SV': data["PATH_SV"],
-          'S3_KEY': "testfinalapi.txt",
-          'BUCKET': data["BUCKET"]}
+
 
 
 def menu(s3, s3r, me):
     if sys.argv[1] == "-u":
-        S3_FILENAME = sys.argv[2]
         print("Uploading Files")
         if len(sys.argv) == 3:
             upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2],ACCESS_KEY,SECRET_KEY)
         else:
             upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2],ACCESS_KEY,SECRET_KEY)
-            r = requests.post(url=URL+"files/"+str(sys.argv[2]), data=datasv)
-            print(r.text)
 
     elif sys.argv[1] == "-d":
         if len(sys.argv) == 3:
-            download_from_aws(data["BUCKET"], sys.argv[2], sys.argv[2])
+            download_from_aws(sys.argv[2], data["BUCKET"],ACCESS_KEY,SECRET_KEY)
 
         else:
-            download_from_aws(sys.argv[3], sys.argv[2], sys.argv[2])
+            download_from_aws( sys.argv[2], sys.argv[3],ACCESS_KEY,SECRET_KEY)
 
     elif sys.argv[1] == "-h":
         print(me)
@@ -76,7 +69,7 @@ def menu(s3, s3r, me):
             keysdown = get_all_s3_keys(bucketdown[BUCKETSEL], ACCESS_KEY, SECRET_KEY)
             print(keysdown)
             KEY = int(input("enter key: "))
-            download_from_aws(keysdown[KEY], bucketdown[BUCKETSEL], LOCAL_PATH, ACCESS_KEY, SECRET_KEY)
+            download_from_aws(keysdown[KEY], bucketdown[BUCKETSEL], ACCESS_KEY, SECRET_KEY)
 
         elif selection == 3:
             bucketdown = get_all_s3_buckets(ACCESS_KEY, SECRET_KEY)
