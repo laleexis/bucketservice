@@ -1,4 +1,3 @@
-import json
 from updowns3 import *
 import sys
 import pyfiglet
@@ -67,7 +66,7 @@ def menu(s3, s3r, me):
             print(bucketdown)
             BUCKETSEL = int(input("Select Bucket: "))
             print("Uploading file...")
-            uploaded = upload_to_aws(LOCAL_FILE, bucketdown[BUCKETSEL], S3_FILENAME, ACCESS_KEY, SECRET_KEY)
+            upload_to_aws(LOCAL_FILE, bucketdown[BUCKETSEL], S3_FILENAME, ACCESS_KEY, SECRET_KEY)
 
         elif selection == 2:
             bucketdown = get_all_s3_buckets(ACCESS_KEY, SECRET_KEY)
