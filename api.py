@@ -25,9 +25,9 @@ def storage():
 def upload(filename):
     req_data = request.get_json()
     if request.method == "POST":
-        upload_to_aws(req_data['LOCAL_PATH']+filename, req_data['BUCKET'], filename, req_data['ACCESS_KEY'],
+        r=upload_to_aws(req_data['LOCAL_PATH']+str(filename), req_data['BUCKET'], filename, req_data['ACCESS_KEY'],
                       req_data['SECRET_KEY'])
-        return "Upload complete"
+        return r
 
 
 @app.route("/files/<filename>", methods=['GET'])
