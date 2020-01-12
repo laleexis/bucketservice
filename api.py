@@ -31,9 +31,9 @@ def upload():
         return "Upload complete"
 
 
-@app.route("/files/<filename>", methods=['POST'])
+@app.route("/files/<filename>", methods=['GET'])
 def download(filename):
-    if request.method == 'POST':
+    if request.method == 'GET':
         req_data = request.get_json()
         download_from_aws(filename, req_data["BUCKET"],req_data["ACCESS_KEY"],req_data["SECRET_KEY"])
         return "Downloaded in instance"
