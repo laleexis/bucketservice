@@ -21,7 +21,7 @@ headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 data = {
     "ACCESS_KEY": ACCESS_KEY,
     "SECRET_KEY": SECRET_KEY,
-    "BUCKET": BUCKET,
+    "BUCKET": sys.argv[3],
     "LOCAL_PATH": LOCAL_PATH,
 }
 
@@ -33,7 +33,8 @@ def menu(s3, s3r, me):
             upload_to_aws(sys.argv[2], data["BUCKET"], sys.argv[2], ACCESS_KEY, SECRET_KEY)
         else:
             upload_to_aws(sys.argv[2], sys.argv[3], sys.argv[2], ACCESS_KEY, SECRET_KEY)
-            r = requests.get(URL + "files/"+ sys.argv[2], data=json.dumps(data), headers=headers)
+            r = requests.get(URL + "files"#+ sys.argv[2]
+            	, data=json.dumps(data), headers=headers)
             print(r.text)
     elif sys.argv[1] == "-d":
         if len(sys.argv) == 3:
