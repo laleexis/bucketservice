@@ -24,6 +24,9 @@ Example:
 "LOCAL_PATH":"LOCAL PATH",
 "URL":"URL"
 }``
+
+- IMPORTANT: 
+If no key is used. use only quotes in the values
  
 
 ### Arguments 
@@ -110,6 +113,13 @@ note:
  `GET url/files/<file to donwload>`
 
  	note: the files will be downloaded in the same location of the script
+
+in the json request body:
+
+`{"BUCKET" : "bucket name",
+	"ACCESS_KEY" : "access key",
+	"SECRET_KEY" : "secret key"
+}`
 
 - To upload file
 
