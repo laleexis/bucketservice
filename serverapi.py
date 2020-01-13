@@ -1,5 +1,5 @@
 from flask import Flask, request
-from updowns3 import upload_to_aws, get_all_s3_keys, download_from_aws, delete_from_aws
+from defs import upload_to_aws, get_all_s3_keys, download_from_aws, delete_from_aws
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "."
