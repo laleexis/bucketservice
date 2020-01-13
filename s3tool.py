@@ -16,7 +16,6 @@ s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                   aws_secret_access_key=SECRET_KEY)
 s3r = boto3.resource('s3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
 me = " To download:  [-d] [file] [bucket]\n To upload: [-u] [file] [bucket]\n To show menu: [-m]"
-# api endpoint
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 data = {
     "ACCESS_KEY": ACCESS_KEY,
