@@ -1,4 +1,4 @@
-from updowns3 import *
+from defs import *
 import sys
 import pyfiglet
 import json
